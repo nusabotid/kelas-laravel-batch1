@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\SensorController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\ArticleController;
@@ -10,6 +12,15 @@ Route::get('/sensor/edit/{id}', [SensorController::class, 'edit']);
 Route::post('/sensor/store', [SensorController::class, 'store']);
 Route::put('/sensor/update/{id}', [SensorController::class, 'update']);
 Route::delete('/sensor/delete/{id}', [SensorController::class, 'delete']);
+
+Route::get('/device', [DeviceController::class, 'index']);
+Route::get('/device/create', [DeviceController::class, 'create']);
+Route::get('/device/edit/{id}', [DeviceController::class, 'edit']);
+Route::post('/device/store', [DeviceController::class, 'store']);
+Route::put('/device/update/{id}', [DeviceController::class, 'update']);
+Route::delete('/device/delete/{id}', [DeviceController::class, 'delete']);
+
+Route::get('/login', [AuthController::class, 'viewLogin']);
 
 
 

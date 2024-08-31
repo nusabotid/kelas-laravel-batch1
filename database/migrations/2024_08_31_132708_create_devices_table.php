@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('sensors', function (Blueprint $table) {
-            $table->boolean('status')->default(false)->after('data');
+        Schema::create('devices', function (Blueprint $table) {
+            $table->id();
+            $table->string('serial_number');
+            $table->string('meta_data');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('sensors', function (Blueprint $table) {
-            $table->dropColumn('status');
-        });
+        Schema::dropIfExists('devices');
     }
 };

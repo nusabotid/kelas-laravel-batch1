@@ -47,6 +47,15 @@ class SensorController extends Controller
         //     $requestData = $request->data;
         // }
 
+        $request->validate([
+            "nama_sensor" => ['required'],
+            "data" => ['required'],
+        ], [
+            "nama_sensor.required" => "Nama sensor harus diisi",
+            "data.required" => "Data harus diisi",
+            "data.numeric" => "Data harus berupa angka",
+        ]);
+
         $sensorData = [
             "nama_sensor" => $request->nama_sensor,
             "data" => $request->data,
@@ -56,7 +65,7 @@ class SensorController extends Controller
 
         $sensor = Sensor::create($sensorData);
 
-        return $sensor;
+        return redirect('/sensor')->with('success', 'Berhasil menambahkan data');
     }
 
     public function edit($id) {
@@ -69,6 +78,15 @@ class SensorController extends Controller
     }
 
     public function update(Request $request, $id) {
+        $request->validate([
+            "nama_sensor" => ['required'],
+            "data" => ['required'],
+        ], [
+            "nama_sensor.required" => "Nama sensor harus diisi",
+            "data.required" => "Data harus diisi",
+            "data.numeric" => "Data harus berupa angka",
+        ]);
+
         $sensorData = [
             'nama_sensor' => $request->nama_sensor,
             'data' => $request->data,
@@ -82,7 +100,7 @@ class SensorController extends Controller
 
         $sensor->update($sensorData);
 
-        return 'Berhasil mengupdate data';
+        return redirect('/sensor')->with('success', 'Berhasil mengubah data');
     }
 
     public function delete($id) {
@@ -93,6 +111,6 @@ class SensorController extends Controller
         $sensor = Sensor::findOrFail($id);
         $sensor->delete();
 
-        return 'Berhasil menghapus data';
+        return redirect('/sensor')->with('success', 'Berhasil menghapus data sensor ' . $sensor->nama_sensor);
     }
 }

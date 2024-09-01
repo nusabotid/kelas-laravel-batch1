@@ -23,6 +23,13 @@
                 <span class="invalid-feedback">{{ $message }}</span>
             @enderror
         </div>
+        <div class="mb-3">
+            <label for="topic" class="form-label">Topic</label>
+            <input type="text" class="form-control @error('topic') is-invalid @enderror" id="topic" name="topic" value="{{ old('topic', $sensor->topic) }}">
+            @error('topic')
+                <span class="invalid-feedback">{{ $message }}</span>
+            @enderror
+        </div>
         <div>
             <button type="submit" class="btn btn-warning">Submit</button>
         </div>

@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sensors', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_sensor');
-            $table->string('data');
-            $table->string('topic');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum('role', ['admin', 'user'])->after('password');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sensors');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role');
+        });
     }
 };

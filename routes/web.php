@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\SensorController;
 use App\Http\Middleware\AuthCheck;
@@ -8,22 +9,28 @@ use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\ArticleController;
 
-Route::middleware(AuthCheck::class)->group(function () {
-    Route::get('/sensor', [SensorController::class, 'index']);
-    Route::get('/sensor/create', [SensorController::class, 'create']);
-    Route::get('/sensor/edit/{id}', [SensorController::class, 'edit']);
-    Route::post('/sensor/store', [SensorController::class, 'store']);
-    Route::put('/sensor/update/{id}', [SensorController::class, 'update']);
-    Route::delete('/sensor/delete/{id}', [SensorController::class, 'delete']);
+Route::middleware('auth-check')->group(function ($router) {
+    $router->get('/', [DashboardController::class, 'index']);
+
+    $router->controller(SensorController::class)->group(function ($subrouter) {
+        $subrouter->get('/sensor', 'index');
+        $subrouter->get('/sensor/create', 'create');
+        $subrouter->get('/sensor/edit/{id}', 'edit');
+        $subrouter->post('/sensor/store', 'store');
+        $subrouter->put('/sensor/update/{id}', 'update');
+        $subrouter->delete('/sensor/delete/{id}', 'delete');
+    });
 });
 
-Route::middleware(IsAdmin::class)->group(function () {
-    Route::get('/device', [DeviceController::class, 'index']);
-    Route::get('/device/create', [DeviceController::class, 'create']);
-    Route::get('/device/edit/{id}', [DeviceController::class, 'edit']);
-    Route::post('/device/store', [DeviceController::class, 'store']);
-    Route::put('/device/update/{id}', [DeviceController::class, 'update']);
-    Route::delete('/device/delete/{id}', [DeviceController::class, 'delete']);
+Route::middleware('is-admin')->group(function ($router) {
+    $router->controller(DeviceController::class)->group(function ($subrouter) {
+        $subrouter->get('/device', 'index');
+        $subrouter->get('/device/create', 'create');
+        $subrouter->get('/device/edit/{id}', 'edit');
+        $subrouter->post('/device/store', 'store');
+        $subrouter->put('/device/update/{id}', 'update');
+        $subrouter->delete('/device/delete/{id}', 'delete');
+    });
 });
 
 // Route::get('/login', [AuthController::class, 'viewLogin']);

@@ -102,11 +102,11 @@
             <div class="row">
                 <div class="card">
                     <h3>Suhu</h3>
-                    <p class="text-suhu">25°C</p>
+                    <p class="text-suhu" id="suhu">?°C</p>
                 </div>
                 <div class="card">
                     <h3>Kelembapan</h3>
-                    <p class="text-kelembapan">60%</p>
+                    <p class="text-kelembapan" id="kelembapan">?%</p>
                 </div>
                 <div class="card">
                     <h3>Posisi Servo</h3>
@@ -190,6 +190,15 @@
 
         client.on("connect", ()=>{
             console.log("Terhubung ke broker");
+        })
+
+        client.on("message", (topic, message)=>{
+            if(topic === "nusabot/suhu"){
+                document.getElementById("suhu").innerHTML = message + " °C";
+            }
+            if(topic === "nusabot/kelembapan"){
+                document.getElementById("kelembapan").innerHTML = message + " %";
+            }
         })
     </script>
 </body>

@@ -169,5 +169,28 @@
         });
 
     </script>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script>
+        const clientId = Math.random().toString(16).substring(2,8)
+        const host = "wss://broker.emqx.io:8084/mqtt"
+
+        const options = {
+            keepalive: 30,
+            clientId: clientId,
+            protocolId: 'MQTT',
+            protocolVersion: 4,
+            clean: true,
+            reconnectPeriod: 1000,
+            connectTimeout: 30 * 1000
+        }
+
+        console.log("Menghubungkan ke broker");
+        const client = mqtt.connect(host, options);
+        client.subscribe("nusabot/#",{qos: 1});
+
+        client.on("connect", ()=>{
+            console.log("Terhubung ke broker");
+        })
+    </script>
 </body>
 </html>

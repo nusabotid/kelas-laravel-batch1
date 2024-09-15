@@ -178,9 +178,9 @@
             if(topic === "nusabot/kelembapan"){
                 document.getElementById("kelembapan").innerHTML = message + " %";
             }
-            // if(topic === "nusabot/lcd"){
-            //     document.getElementById("input-lcd").value = message;
-            // }
+            if(topic === "nusabot/lcd"){
+                document.getElementById("input-lcd").value = message;
+            }
         })
     </script>
     <script>

@@ -5,6 +5,14 @@
             "host": "broker.emqx.io",
             "port": 1883,
             "clientId": "vsmqtt_client_2d21"
+        },
+        {
+            "name": "EMQX WS",
+            "host": "broker.emqx.io",
+            "port": 8084,
+            "clientId": "vsmqtt_client_f4a9",
+            "path" : "/mqtt",
+            "protocol" : "wss"
         }
     ]
 }

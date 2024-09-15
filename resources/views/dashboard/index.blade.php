@@ -147,28 +147,7 @@
         </section>
     </main>
 
-    <script>
-        const servoSlider = document.getElementById('servo-slider');
-        const textServo = document.getElementById('servo-text');
-
-        servoSlider.addEventListener('input', () => {
-            textServo.textContent = `${servoSlider.value}°`;
-        });
-
-        const btnSubmit = document.getElementById('btn-submit');
-        const inputLcd = document.getElementById('input-lcd');
-
-        btnSubmit.addEventListener('click', () => {
-            const textValue = inputLcd.value;
-
-            if (!textValue) {
-                alert('Teks harus diisi');
-            } else {
-                alert(`text value => ${textValue}`)
-            }
-        });
-
-    </script>
+    
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script>
         const clientId = Math.random().toString(16).substring(2,8)
@@ -199,7 +178,33 @@
             if(topic === "nusabot/kelembapan"){
                 document.getElementById("kelembapan").innerHTML = message + " %";
             }
+            // if(topic === "nusabot/lcd"){
+            //     document.getElementById("input-lcd").value = message;
+            // }
         })
+    </script>
+    <script>
+        const servoSlider = document.getElementById('servo-slider');
+        const textServo = document.getElementById('servo-text');
+
+        servoSlider.addEventListener('input', () => {
+            textServo.textContent = `${servoSlider.value}°`;
+        });
+
+        const btnSubmit = document.getElementById('btn-submit');
+        const inputLcd = document.getElementById('input-lcd');
+
+        btnSubmit.addEventListener('click', () => {
+            const textValue = inputLcd.value;
+
+            if (!textValue) {
+                alert('Teks harus diisi');
+            } else {
+                alert(`text value => ${textValue}`);
+                client.publish("nusabot/lcd", textValue.toString(), {qos: 1, retain: true});
+            }
+        });
+
     </script>
 </body>
 </html>

@@ -80,7 +80,7 @@
             text-align: center;
         }
         .status-online {
-            color: lightgreen;
+            color: green;
         }
         .status-offline {
             color: red;
@@ -190,6 +190,12 @@
             @foreach ($devices as $item)
                 if(topic === "nusabot/serial_number/{{ $item->serial_number }}"){
                     document.getElementById("nusabot/serial_number/{{ $item->serial_number }}").innerHTML = message;
+                    
+                    if(message.toString() === "Online"){
+                        document.getElementById("nusabot/serial_number/{{ $item->serial_number }}").style.color = "green";
+                    } else {
+                        document.getElementById("nusabot/serial_number/{{ $item->serial_number }}").style.color = "red";
+                    }
                 }
             @endforeach
         })

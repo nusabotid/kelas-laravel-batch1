@@ -110,8 +110,8 @@
                 </div>
                 <div class="card">
                     <h3>Posisi Servo</h3>
-                    <input type="range" min="0" max="180" value="90" name="servo-slider" id="servo-slider">
-                    <p class="text-posisi-servo" id="servo-text">90°</p>
+                    <input type="range" min="0" max="180" id="servo-slider">
+                    <p class="text-posisi-servo" id="servo-text">?°</p>
                 </div>
                 <div class="card">
                     <h3>Display LCD</h3>
@@ -136,7 +136,7 @@
                                         <span>{{ $item->serial_number }}</span>
                                     </td>
                                     <td>
-                                        <span class="status-online">Online</span>
+                                        <span class="status-online" id="nusabot/serial_number/{{ $item->serial_number }}">?</span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -181,6 +181,17 @@
             if(topic === "nusabot/lcd"){
                 document.getElementById("input-lcd").value = message;
             }
+
+            if(topic === "nusabot/servo"){
+                document.getElementById("servo-text").innerHTML = message;
+                document.getElementById("servo-slider").value = parseInt(message);
+            }
+
+            @foreach ($devices as $item)
+                if(topic === "nusabot/serial_number/{{ $item->serial_number }}"){
+                    document.getElementById("nusabot/serial_number/{{ $item->serial_number }}").innerHTML = message;
+                }
+            @endforeach
         })
     </script>
     <script>
@@ -189,6 +200,11 @@
 
         servoSlider.addEventListener('input', () => {
             textServo.textContent = `${servoSlider.value}°`;
+            // client.publish("nusabot/servo", textServo.innerHTML.toString(), {qos: 1, retain: true});
+        });
+
+        servoSlider.addEventListener('mouseup', () => {
+            client.publish("nusabot/servo", textServo.innerHTML.toString(), {qos: 1, retain: true});
         });
 
         const btnSubmit = document.getElementById('btn-submit');

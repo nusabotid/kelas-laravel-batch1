@@ -151,13 +151,15 @@
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script>
         const clientId = Math.random().toString(16).substring(2,8)
-        const host = "wss://broker.emqx.io:8084/mqtt"
+        const host = "wss://nusabotid.cloud.shiftr.io:443/mqtt"
 
         const options = {
             keepalive: 30,
             clientId: clientId,
             protocolId: 'MQTT',
             protocolVersion: 4,
+            username: 'nusabotid',
+            password: 'tEpVrlp9NXqXlETc',
             clean: true,
             reconnectPeriod: 1000,
             connectTimeout: 30 * 1000
